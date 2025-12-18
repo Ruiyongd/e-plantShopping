@@ -43,14 +43,24 @@ const CartItem = ({ onContinueShopping }) => {
       name: item.name, 
       quantity: item.quantity - 1 
     }));
+  } else {
+    // Remove item if quantity would drop to 0
+    dispatch(removeItem(item.name));
+  }
+};
 
   const handleRemove = (item) => {
   };
 
   // Calculate total cost based on quantity for an item
   const calculateTotalCost = (item) => {
-  };
-
+  // Extract numeric value from cost string (e.g., "$10.00" -> 10.00)
+  const unitPrice = parseFloat(item.cost.substring(1));
+  // Calculate subtotal
+  const subtotal = unitPrice * item.quantity;
+  // Return formatted with 2 decimal places
+  return parseFloat(subtotal.toFixed(2));
+};
   return (
     <div className="cart-container">
       <h2 style={{ color: 'black' }}>Total Cart Amount: ${calculateTotalAmount()}</h2>
